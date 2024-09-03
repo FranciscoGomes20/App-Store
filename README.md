@@ -23,6 +23,18 @@ Use o gerenciador de pacotes do python para baixar as as bibliotecas necessária
 ```bash
 pip install -r requirements.txt
 ```
+## Configuração de Variáveis de Ambiente com dotenv
+
+Crie um arquivo .env na raiz do projeto. Este arquivo deve conter todas as variáveis de ambiente necessárias para a aplicação funcionar corretamente. Aqui está um exemplo de como o arquivo .env pode ser estruturado:
+
+```bash
+DJANGO_SECRET_KEY=sua-chave-secreta-aqui
+DEBUG=True
+```
+
+Não compartilhe seu arquivo .env ou qualquer informação sensível contida nele. Essas variáveis devem ser mantidas em segredo e não devem ser incluídas no controle de versão.
+
+Este projeto utiliza o [python-dotenv](https://pypi.org/project/python-dotenv/) para gerenciar variáveis de ambiente de maneira segura.
 
 ## Migração do Banco de dados
 

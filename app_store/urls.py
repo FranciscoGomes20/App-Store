@@ -1,4 +1,9 @@
 from django.urls import path
+from app_store.views import LogoutView
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 from .views import (
     EstadoListCreateView, EstadoDetailView,
     CidadeListCreateView, CidadeDetailView,
@@ -13,6 +18,9 @@ from .views import (
 )
 
 urlpatterns = [
+    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('logout/', LogoutView.as_view(), name='logout'),
     path('estados/', EstadoListCreateView.as_view(), name='estado-list-create'),
     path('estados/<int:pk>/', EstadoDetailView.as_view(), name='estado-detail'),
     path('cidades/', CidadeListCreateView.as_view(), name='cidade-list-create'),

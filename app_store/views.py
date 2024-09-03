@@ -1,7 +1,27 @@
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from .permissions import ReadOnly
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from .models import Estado, Cidade, Endereco, Categoria, UnidadeMedida, Produto, Cliente, Venda, ItemVenda, Funcionario
 from .serializers import EstadoSerializer, CidadeSerializer, EnderecoSerializer, CategoriaSerializer, UnidadeMedidaSerializer, ProdutoSerializer, ClienteSerializer, VendaSerializer, ItemVendaSerializer, FuncionarioSerializer
+
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh"]
+            if refresh_token is None:
+                return Response({"error": "Refresh token não fornecido"}, status=400)
+            
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+
+            return Response({"message": "Logout realizado com sucesso"}, status=200)
+        except Exception as e:
+            return Response({"error": f"Falha no logout: {str(e)}"}, status=400)
 
 class EstadoListCreateView(ListCreateAPIView):
     queryset = Estado.objects.all()
