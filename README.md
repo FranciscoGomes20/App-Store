@@ -11,14 +11,14 @@ Logo depois, acesse a pasta do ambiente pelo terminal e ative o arquivo "activat
 venv\Scripts\activate
 ```
 
-No caso do Linux
+No caso do Linux.
 ```bash
 venv\bin\activate
 ```
 
 ## Instalando as dependências do projeto.
 
-Use o gerenciador de pacotes do python para baixar as as bibliotecas necessárias do arquivo requirements.txt
+Use o gerenciador de pacotes do python para baixar as as bibliotecas necessárias do arquivo requirements.txt.
 
 ```bash
 pip install -r requirements.txt
