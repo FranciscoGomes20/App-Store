@@ -13,6 +13,7 @@ import os
 from pathlib import Path
 from .rest_framework import *
 from dotenv import load_dotenv
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -101,6 +102,13 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10),  # Tempo de expiração do access token (10 minutos)
+    'REFRESH_TOKEN_LIFETIME': timedelta(hours=3),    # Tempo de expiração do refresh token (3 horas)
+    'ROTATE_REFRESH_TOKENS': True,                  # Gera novo refresh token quando atualizado
+    'BLACKLIST_AFTER_ROTATION': True,               # Coloca o refresh token antigo na blacklist
 }
 
 # Password validation
