@@ -1,0 +1,25 @@
+# Python dependencies
+*.pyc
+__pycache__/
+
+# Django files
+local_settings.py
+db.sqlite3
+
+# IDE and editor files
+.vscode/
+.pycharm/
+.idea/
+
+# Docker and system files
+Dockerfile
+docker-compose.yml
+*.log
+*.pid
+*.sock
+
+# Node modules (if using npm or yarn for frontend dependencies)
+node_modules/
+
+# Git files
+.git/
