@@ -1,16 +1,6 @@
-version: '3'
 
 services:
-  db:
-    image: postgres
-    environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-    volumes:
-      - ./pgdata:/var/lib/postgresql/data
-
-  app:
+  web:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
@@ -19,3 +9,19 @@ services:
       - "8000:8000"
     depends_on:
       - db
+    environment:
+      - DATABASE_NAME=${DB_NAME}
+      - DATABASE_USER=${DB_USER}
+      - DATABASE_PASSWORD=${DB_PASSWORD}
+
+  db:
+    image: app_store:13
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+volumes:
+  postgres_data:
