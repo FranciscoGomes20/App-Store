@@ -1,14 +1,12 @@
 FROM python:3.12.4-alpine3.20
 
-ENV PYTHONDONTWRITEBYTECODE 1
-
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
 WORKDIR /APP_STORE
 
 COPY requirements.txt .
 
-# Configurar o ambiente virtual e instalar dependências
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip
 
