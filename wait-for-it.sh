@@ -1,30 +1,22 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 # Simple script to wait for a service to become available
-# Usage: ./wait-for-it.sh host:port -- command arguments
+# Usage: ./wait-for-it.sh host:port -- command args
 
 set -e
 
 TIMEOUT=30
 QUIET=0
-PROTOCOL="tcp"
 
 print_help() {
   echo "Usage: $0 host:port [--timeout SECONDS] [--quiet] -- command args"
-  echo
-  echo "Options:"
-  echo "  --timeout SECONDS  How long to wait for the service to be available"
-  echo "  --quiet            Suppress output"
-  echo "  --protocol PROTOCOL  Protocol to use (tcp or http)"
-  echo "  --help             Display this help message"
 }
 
-while [[ $# -gt 0 ]]; do
-  case $1 in
+while [ $# -gt 0 ]; do
+  case "$1" in
     *:* )
-      HOST_PORT=(${1//:/ })
-      HOST=${HOST_PORT[0]}
-      PORT=${HOST_PORT[1]}
+      HOST=$(echo "$1" | cut -d: -f1)
+      PORT=$(echo "$1" | cut -d: -f2)
       shift
       ;;
     --timeout)
@@ -34,10 +26,6 @@ while [[ $# -gt 0 ]]; do
     --quiet)
       QUIET=1
       shift
-      ;;
-    --protocol)
-      PROTOCOL=$2
-      shift 2
       ;;
     --help)
       print_help
@@ -59,19 +47,14 @@ fi
 echo "Waiting for $HOST:$PORT to be available..."
 
 for i in $(seq $TIMEOUT); do
-  if [ "$PROTOCOL" = "tcp" ]; then
-    nc -z $HOST $PORT && break
-  elif [ "$PROTOCOL" = "http" ]; then
-    curl -s $HOST:$PORT > /dev/null && break
-  else
-    echo "Unsupported protocol: $PROTOCOL"
-    exit 1
-  fi
+  nc -z $HOST $PORT && break
+  echo "Waiting for $HOST:$PORT..."
   sleep 1
 done
 
-if [ "$QUIET" -eq 0 ]; then
-  echo "$HOST:$PORT is available."
+if [ "$i" = "$TIMEOUT" ]; then
+  echo "Timeout: Unable to connect to $HOST:$PORT"
+  exit 1
 fi
 
 exec $COMMAND

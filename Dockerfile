@@ -17,6 +17,12 @@ RUN apk add --update --no-cache postgresql-client && \
     rm -rf /tmp && \
     apk del .tmp-build-deps
 
+COPY wait-for-it.sh /wait-for-it.sh
+RUN chmod +x /wait-for-it.sh
+
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
 RUN adduser --disabled-password --no-create-home django-user
 
 ENV PATH="/py/bin:$PATH"
@@ -26,5 +32,7 @@ USER django-user
 COPY . .
 
 EXPOSE 8000
+
+ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
