@@ -7,22 +7,25 @@ services:
     working_dir: /app
     ports:
       - "8000:8000"
-    depends_on:
-      - db
     environment:
-      - DATABASE_NAME=${DB_NAME}
-      - DATABASE_USER=${DB_USER}
-      - DATABASE_PASSWORD=${DB_PASSWORD}
-      - DATABASE_HOST=${DB_HOST}
+      - DATABASE_URL=${DATABASE_URL}
 
-  db:
-    image: postgres:13
-    environment:
-      POSTGRES_DB: ${DB_NAME}
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
+#    depends_on:
+#      - db
+#    environment:
+#      - DATABASE_NAME=${DB_NAME}
+#      - DATABASE_USER=${DB_USER}
+#      - DATABASE_PASSWORD=${DB_PASSWORD}
+#      - DATABASE_HOST=${DB_HOST}
+
+#  db:
+#    image: postgres:13
+#    environment:
+#      POSTGRES_DB: ${DB_NAME}
+#      POSTGRES_USER: ${DB_USER}
+#      POSTGRES_PASSWORD: ${DB_PASSWORD}
+#    volumes:
+#      - postgres_data:/var/lib/postgresql/data/
 
 volumes:
   postgres_data:
