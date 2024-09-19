@@ -31,6 +31,9 @@ DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = [os.getenv('DJANGO_HOSTS')]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://app-store-production-840d.up.railway.app',
+]
 
 # Application definition
 
